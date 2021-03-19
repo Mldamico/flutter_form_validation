@@ -2,6 +2,7 @@
     package="com.example.form_validation">
    <application
         android:label="form_validation"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
