@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:form_validation/src/bloc/login_bloc.dart';
 import 'package:form_validation/src/bloc/provider.dart';
+import 'package:form_validation/src/providers/usuario_provider.dart';
 
 class RegisterPage extends StatelessWidget {
+  final usuarioProvider = new UsuarioProvider();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,7 +183,7 @@ class RegisterPage extends StatelessWidget {
         return ConstrainedBox(
           constraints: BoxConstraints.tightFor(width: 250, height: 40),
           child: ElevatedButton(
-            onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+            onPressed: snapshot.hasData ? () => _register(bloc, context) : null,
             style: ElevatedButton.styleFrom(
               primary: Colors.deepPurple,
               shape: RoundedRectangleBorder(
@@ -197,10 +199,11 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) {
+  _register(LoginBloc bloc, BuildContext context) {
     print('=========');
     print('Email: ${bloc.email}');
     print('Password: ${bloc.password}');
-    Navigator.pushReplacementNamed(context, 'home');
+    // Navigator.pushReplacementNamed(context, 'home');
+    usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
   }
 }
