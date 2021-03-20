@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:form_validation/src/bloc/login_bloc.dart';
 import 'package:form_validation/src/bloc/provider.dart';
 import 'package:form_validation/src/providers/usuario_provider.dart';
+import 'package:form_validation/src/utils/utils.dart';
 
 class RegisterPage extends StatelessWidget {
   final usuarioProvider = new UsuarioProvider();
@@ -199,11 +200,12 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  _register(LoginBloc bloc, BuildContext context) {
-    print('=========');
-    print('Email: ${bloc.email}');
-    print('Password: ${bloc.password}');
-    // Navigator.pushReplacementNamed(context, 'home');
-    usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
+  _register(LoginBloc bloc, BuildContext context) async {
+    Map info = await usuarioProvider.nuevoUsuario(bloc.email, bloc.password);
+    if (info['ok']) {
+      Navigator.pushReplacementNamed(context, 'home');
+    } else {
+      mostrarAlerta(context, info['mensaje']);
+    }
   }
 }
