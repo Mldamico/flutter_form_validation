@@ -13,9 +13,8 @@ class ProductosProvider {
     final uri = Uri.https(_url, '/productos.json', {'auth': _prefs.token});
     final resp = await http.post(uri, body: productoModelToJson(producto));
 
-    final decodedData = json.decode(resp.body);
+    json.decode(resp.body);
 
-    print(decodedData);
     return true;
   }
 
@@ -36,6 +35,8 @@ class ProductosProvider {
     final Map<String, dynamic> decodedData = json.decode(resp.body);
     final List<ProductoModel> productos = [];
     if (decodedData == null) return [];
+    if (decodedData['error'] != null) return [];
+
     decodedData.forEach((id, producto) {
       final prodTemp = ProductoModel.fromJson(producto);
       prodTemp.id = id;
